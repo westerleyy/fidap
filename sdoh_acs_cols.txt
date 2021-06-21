@@ -1,0 +1,141 @@
+# bigquery-public-data.census_bureau_acs.blockgroup_2018_5yr | zcta5_2018_5yr | zip_codes_2018_5yr | 
+
+[NEEDS ACS 2019 DATA]
+
+geo_id
+
+## education
+associates_degree
+bachelors_degree
+high_school_diploma
+less_one_year_college
+masters_degree
+one_year_more_college
+
+## family
+### family structure
+married_households
+nonfamily_households
+family_households
+
+## family
+### population structure
+median_income
+median_age
+total_pop
+male_pop
+female_pop
+male_under_5
+male_5_to_9
+male_10_to_14
+male_15_to_17
+male_18_to_19
+male_20
+male_21
+male_22_to_24
+male_25_to_29
+male_30_to_34
+male_35_to_39
+male_40_to_44
+male_45_to_49
+male_50_to_54
+male_55_to_59
+male_60_to_61
+male_62_to_64
+male_65_to_66
+male_67_to_69
+male_70_to_74
+male_75_to_79
+male_80_to_84
+male_85_and_over
+female_under_5
+female_5_to_9
+female_10_to_14
+female_15_to_17
+female_18_to_19
+female_20
+female_21
+female_22_to_24
+female_25_to_29
+female_30_to_34
+female_35_to_39
+female_40_to_44
+female_45_to_49
+female_50_to_54
+female_55_to_59
+female_60_to_61
+female_62_to_64
+female_65_to_66
+female_67_to_69
+female_70_to_74
+female_75_to_79
+female_80_to_84
+female_85_and_over
+
+## personal infrastructure
+median_year_structure_built
+percent_income_spent_on_rent
+[DERIVED] total_pop/area = density
+total_pop/housing_units = housing density?
+
+
+# fidap-301014.datacommons
+
+[NEEDS CRIME DATA AT ZIP CODE LEVEL | ALL TABLES SHOULD HAVE SAME COLUMNS? | NEEDS EXTREME WEATHER DATA]
+
+# bigquery-public-data.noaa_historic_severe_storms.storms_2020|storms_2018|storms_2019
+
+# bigquery-public-data.austin_crime.crime <- actually not useful because no census_tract, no latitude + longitude, no address to extract zipcode | very outdated only 2014-2016
+
+# bigquery-public-data.chicago_crime.crime 
+
+## incidence of crime
+WITH uchicago_zip AS(
+SELECT zip_code, zip_code_geom 
+FROM bigquery-public-data.geo_us_boundaries.zip_codes
+WHERE zip_code IN ('60637')
+)
+SELECT case_number, primary_type, description, latitude, longitude, string(date) AS updated_date, u.zip_code 
+from bigquery-public-data.chicago_crime.crime, uchicago_zip AS u
+WHERE year = 2018 
+AND location IS NOT NULL
+AND ST_WITHIN(ST_GEOGPOINT(longitude, latitude), u.zip_code_geom)
+;
+
+# retail grocery gap 
+
+WITH bounding_area AS (SELECT geometry FROM bigquery-public-data.geo_openstreetmap.planet_features_multipolygons
+  WHERE ('name:en', 'United States') IN (SELECT(key, value) FROM UNNEST(all_tags))
+  AND ('boundary', 'administrative') IN (SELECT(key, value) FROM UNNEST(all_tags))
+  AND ('admin_level', '2') IN  (SELECT(key, value) FROM UNNEST(all_tags))
+)
+SELECT pt.geometry, tags.value AS shop_name
+FROM bigquery-public-data.geo_openstreetmap.planet_features_points AS pt, bounding_area
+JOIN UNNEST(all_tags) AS tags
+WHERE tags.key = 'name'
+AND ('shop', 'supermarket') IN (SELECT(key, value) FROM UNNEST(all_tags))
+AND ST_WITHIN(pt.geometry, bounding_area.geometry)
+LIMIT 20;
+
+# personal infrastructure
+SELECT geometry, tags.value AS stop_name
+FROM bigquery-public-data.geo_openstreetmap.planet_features_points
+JOIN UNNEST(all_tags) AS tags
+WHERE tags.key = 'name'
+AND ('operator', 'Chicago Transit Authority') IN (SELECT(key, value) FROM UNNEST(all_tags))
+LIMIT 20;
+
+# bigquery-public-data.epa_historical_air_quality.pm10_daily_summary
+select state_name, city_name, state_code, county_code, latitude, longitude, parameter_name, sample_duration, arithmetic_mean AS pm10_value, 
+  STRING(date_local) AS obs_date,
+  ST_GEOGPOINT(longitude, latitude) AS measuring_stn_geom
+from bigquery-public-data.epa_historical_air_quality.pm10_daily_summary
+WHERE state_name = 'Illinois' 
+AND city_name = 'Chicago'
+AND STRING(date_local) LIKE '2018%'
+
+
+
+
+
+
