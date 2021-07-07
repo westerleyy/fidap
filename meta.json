@@ -1,0 +1,13 @@
+{
+ "description": "NYC Subway Turnstile Counts Data aggregated by day and station complex for the year 2020. Updated weekly.",
+ "keywords": [
+  "NYC",
+  "transit",
+  "subway",
+  "turnstiles",
+  "mobility"
+ ],
+ "path": "/ipfs/QmXiQDjwVtnzNx2sNoAPAGEmfuYEJDiZnKBRVkKbzkDdZV",
+ "qri": "md:0",
+ "title": "NYC Subway Turnstile Counts - 2020"
+}
