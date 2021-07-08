@@ -1,0 +1,70 @@
+{
+ "checksum": "/ipfs/QmVwaXWh1Vbvwo5Sn8fGpuLPsyD28km9y65cL8beTRLwsK",
+ "depth": 2,
+ "entries": 80913,
+ "errCount": 3250,
+ "format": "csv",
+ "formatConfig": {
+  "headerRow": true,
+  "lazyQuotes": true
+ },
+ "length": 7079919,
+ "path": "/ipfs/QmTZD3cfDC7UNt4aZavMJQUJiZnTS5zTYRo2YNkozCce9p",
+ "qri": "st:0",
+ "schema": {
+  "items": {
+   "items": [
+    {
+     "title": "stop_name",
+     "type": "string"
+    },
+    {
+     "title": "daytime_routes",
+     "type": "string"
+    },
+    {
+     "title": "division",
+     "type": "string"
+    },
+    {
+     "title": "line",
+     "type": "string"
+    },
+    {
+     "title": "borough",
+     "type": "string"
+    },
+    {
+     "title": "structure",
+     "type": "string"
+    },
+    {
+     "title": "gtfs_longitude",
+     "type": "number"
+    },
+    {
+     "title": "gtfs_latitude",
+     "type": "number"
+    },
+    {
+     "title": "complex_id",
+     "type": "integer"
+    },
+    {
+     "title": "date",
+     "type": "string"
+    },
+    {
+     "title": "entries",
+     "type": "integer"
+    },
+    {
+     "title": "exits",
+     "type": "integer"
+    }
+   ],
+   "type": "array"
+  },
+  "type": "array"
+ }
+}
