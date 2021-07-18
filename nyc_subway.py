@@ -14,7 +14,7 @@ from datetime import datetime
 import fidap
 
 # instantiate api connection
-fidap = fidap.fidap_client(api_key=api_key)
+fidap = fidap.fidap_client(api_key=st_secrets['api_key'])
 
 
 # get us holidays
