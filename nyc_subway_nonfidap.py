@@ -56,8 +56,8 @@ station_list = []
 station_list = station_geom.stop_name.unique().tolist()
 
 # get holiday list
-holiday_list = []
-holiday_list = us_holidays.holidayName.unique().tolist()
+# holiday_list = []
+# holiday_list = us_holidays.holidayName.unique().tolist()
 
 header = st.beta_container()
 sidebar_input = st.beta_container()
