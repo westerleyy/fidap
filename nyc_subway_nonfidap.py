@@ -29,9 +29,9 @@ from datetime import datetime
 # us_holidays['holidayDate'] = us_holidays['holidayDate'].dt.normalize()
 
 # read nyc turnstile data
-nyc_turnstile_data_2019 = pd.read_csv('C:/Users/wesch/OneDrive/Documents/Fidap/fidap/nyc_mta_transit_data/body_2019.csv', usecols = ['stop_name', 'daytime_routes', 'line', 'gtfs_longitude', 'gtfs_latitude', 'date', 'entries', 'exits'])
-nyc_turnstile_data_2020 = pd.read_csv('C:/Users/wesch/OneDrive/Documents/Fidap/fidap/nyc_mta_transit_data/body_2020.csv', usecols = ['stop_name', 'daytime_routes', 'line', 'gtfs_longitude', 'gtfs_latitude', 'date', 'entries', 'exits'])
-nyc_turnstile_data_2021 = pd.read_csv('C:/Users/wesch/OneDrive/Documents/Fidap/fidap/nyc_mta_transit_data/body_2021.csv', usecols = ['stop_name', 'daytime_routes', 'line', 'gtfs_longitude', 'gtfs_latitude', 'date', 'entries', 'exits'])
+nyc_turnstile_data_2019 = pd.read_csv('./nyc_mta_transit_data/body_2019.csv', usecols = ['stop_name', 'daytime_routes', 'line', 'gtfs_longitude', 'gtfs_latitude', 'date', 'entries', 'exits'])
+nyc_turnstile_data_2020 = pd.read_csv('./nyc_mta_transit_data/body_2020.csv', usecols = ['stop_name', 'daytime_routes', 'line', 'gtfs_longitude', 'gtfs_latitude', 'date', 'entries', 'exits'])
+nyc_turnstile_data_2021 = pd.read_csv('./nyc_mta_transit_data/body_2021.csv', usecols = ['stop_name', 'daytime_routes', 'line', 'gtfs_longitude', 'gtfs_latitude', 'date', 'entries', 'exits'])
 
 def initial_df_processing(df):
     
