@@ -10,23 +10,23 @@ import numpy as np
 import pandas as pd
 import altair as alt
 from datetime import datetime
-from config import api_key
-import fidap
+# from config import api_key
+# import fidap
 
-# instantiate api connection
-fidap = fidap.fidap_client(api_key=api_key)
+# # instantiate api connection
+# fidap = fidap.fidap_client(api_key=api_key)
 
 
-# get us holidays
-us_holidays = fidap.sql("""
-SELECT holidayName, SUBSTR(CAST(ph.date AS STRING),1,10) AS holidayDate   
-FROM fidap-301014.azure_open_datasets.public_holidays AS ph
-WHERE EXTRACT(YEAR FROM ph.date) BETWEEN 2019 AND 2021
-AND ph.countryRegionCode = 'US'
-                        """)
+# # get us holidays
+# us_holidays = fidap.sql("""
+# SELECT holidayName, SUBSTR(CAST(ph.date AS STRING),1,10) AS holidayDate   
+# FROM fidap-301014.azure_open_datasets.public_holidays AS ph
+# WHERE EXTRACT(YEAR FROM ph.date) BETWEEN 2019 AND 2021
+# AND ph.countryRegionCode = 'US'
+#                         """)
 
-us_holidays['holidayDate'] = pd.to_datetime(us_holidays['holidayDate'], format = '%Y-%m-%d')
-us_holidays['holidayDate'] = us_holidays['holidayDate'].dt.normalize()
+# us_holidays['holidayDate'] = pd.to_datetime(us_holidays['holidayDate'], format = '%Y-%m-%d')
+# us_holidays['holidayDate'] = us_holidays['holidayDate'].dt.normalize()
 
 # read nyc turnstile data
 nyc_turnstile_data_2019 = pd.read_csv('C:/Users/wesch/OneDrive/Documents/Fidap/fidap/nyc_mta_transit_data/body_2019.csv', usecols = ['stop_name', 'daytime_routes', 'line', 'gtfs_longitude', 'gtfs_latitude', 'date', 'entries', 'exits'])
