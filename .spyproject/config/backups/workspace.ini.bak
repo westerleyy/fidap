@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['streamlit_mvp.py', 'nyc_subway.py']
+recent_files = []
 
