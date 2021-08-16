@@ -1,0 +1,30 @@
+Obtain mean sale price per square foot of the 50 most populated Metropolitan Statistical Areas in the country by aggregating median sale price per square foot at the county level and finding the counties that each Metropolitan Statistical Area contains. 
+
+WITH top_cbsa AS (
+SELECT c2.name, c2.cbsa_geom
+FROM bigquery-public-data.census_bureau_acs.cbsa_2018_5yr AS c1
+INNER JOIN bigquery-public-data.geo_us_boundaries.cbsa AS c2
+ON c1.geo_id = c2.geo_id
+WHERE c2.msa_indicator = '1'
+AND RIGHT(c2.name, 2) NOT IN ('GM', 'MP', 'HI', 'VI', 'AK', 'PR')
+ORDER BY c1.total_pop DESC 
+LIMIT 20),
+
+cbsa_counties AS (
+SELECT c.lsad_name AS county_name, s.state, CONCAT(c.lsad_name, ", ", s.state) AS full_county_name, tc.name AS msa_name, c.county_geom 
+FROM bigquery-public-data.geo_us_boundaries.counties AS c, top_cbsa AS tc
+INNER JOIN bigquery-public-data.geo_us_boundaries.states AS s
+ON s.state_fips_code = c.state_fips_code
+WHERE c.state_fips_code NOT IN ('02', '15', '66', '72', '69', '78', '60')
+AND ST_CONTAINS(tc.cbsa_geom, c.county_geom)),
+
+mean_cbsa AS (
+SELECT cc.msa_name, period_end, 
+AVG(CAST(median_sale_ppsf AS FLOAT64)) AS ppsf
+FROM fidap-301014.redfin.weekly_housing_market AS w
+INNER JOIN cbsa_counties AS cc
+ON cc.full_county_name = w.region_name
+WHERE duration = '1 weeks'
+AND region_type = 'county'
+AND CAST(period_begin AS DATE) > '2020-01-01'
+GROUP BY period_end, cc.msa_name)
