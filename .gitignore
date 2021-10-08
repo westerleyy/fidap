@@ -1,8 +1,9 @@
 config.py
 scratch_sql.txt
 sdoh_acs_cols.txt
-EDA.ipynb
 tl_2019_us_zcta510/
 Zip_Codes_(LA_County)/
+data_ingestion/
 junk.csv
 .Rproj.user
+analytics_notebooks/config.py
